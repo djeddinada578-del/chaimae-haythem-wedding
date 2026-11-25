@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>دعوة زواج</title>
+    <style>
+      :root {
+        color-scheme: light;
+        background: #f7f3ef;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+        background: #f7f3ef;
+      }
+
+      body {
+        display: grid;
+        place-items: center;
+      }
+
+      .invitation {
+        position: relative;
+        width: min(100vw, 56.25vh);
+        height: min(177.7778vw, 100vh);
+        max-width: 720px;
+        max-height: 1280px;
+        background: #e8ddd4;
+        overflow: hidden;
+      }
+
+      video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        background: #e8ddd4;
+      }
+
+      .venue-map-link {
+        position: absolute;
+        z-index: 1;
+        left: 29%;
+        top: 61%;
+        width: 42%;
+        height: 7%;
+        display: none;
+      }
+
+      .venue-map-link.is-active {
+        display: block;
+      }
+
+    </style>
+  </head>
+  <body>
+    <main class="invitation" aria-label="دعوة زواج">
+      <video
+        id="invitationVideo"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        poster="poster.jpg"
+        aria-label="دعوة زفاف"
+      >
+        <source src="invitation_updated.mp4?v=9" type="video/mp4" />
+      </video>
+      <a
+        id="venueMapLink"
+        class="venue-map-link"
+        href="https://www.google.com/maps/search/?api=1&amp;query=Hotel+Royal+Elisa+Annaba"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="عرض الموقع على خرائط Google"
+      ></a>
+    </main>
+
+    <script>
+      const video = document.getElementById("invitationVideo");
+      const venueMapLink = document.getElementById("venueMapLink");
+
+      const startPlayback = () => {
+        video.play().catch(() => {});
+      };
+
+      video.addEventListener("timeupdate", () => {
+        venueMapLink.classList.toggle(
+          "is-active",
+          video.currentTime >= 21.5 && video.currentTime < 34
+        );
+      });
+
+      document.addEventListener("pointerdown", startPlayback, { once: true });
+      startPlayback();
+    </script>
+  </body>
+</html>
